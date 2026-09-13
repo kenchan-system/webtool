@@ -86,7 +86,7 @@ export const TOOLS: Tool[] = [
   { slug: "stopwatch", name: "ストップウォッチ", cat: "time", status: "live", live: 9, tagline: "経過時間を計測します。ラップ（区間）計測にも対応。" },
   { slug: "clock", name: "デジタル時計", cat: "time", status: "live", live: 10, tagline: "大きな数字で現在時刻を表示します。" },
   { slug: "analog-clock", name: "アナログ時計", cat: "time", status: "live", live: 11, tagline: "針が動くアナログ時計を、大きな文字盤で表示します。" },
-  { slug: "world-clock", name: "世界時計", cat: "time", status: "soon", tagline: "主要都市の現在時刻をまとめて表示します。" },
+  { slug: "world-clock", name: "世界時計", cat: "time", status: "live", live: 12, tagline: "主要都市の現在時刻をまとめて表示します。" },
 
   // ---- 文字 ----
   { slug: "char-count", name: "文字数カウント", cat: "text", status: "soon", tagline: "文章の文字数・行数を数えます。空白ありなしも切替。" },
