@@ -82,7 +82,7 @@ export const TOOLS: Tool[] = [
   { slug: "calendar", name: "カレンダー", cat: "date", status: "live", live: 7, tagline: "祝日つきの月間・年間カレンダーを表示・印刷できます。" },
 
   // ---- 時間 ----
-  { slug: "timer", name: "タイマー", cat: "time", status: "soon", tagline: "指定した時間でお知らせするカウントダウンタイマー。" },
+  { slug: "timer", name: "タイマー", cat: "time", status: "live", live: 8, tagline: "指定した時間でお知らせするカウントダウンタイマー。" },
   { slug: "stopwatch", name: "ストップウォッチ", cat: "time", status: "soon", tagline: "経過時間を計測します。ラップ（区間）計測にも対応。" },
   { slug: "clock", name: "デジタル時計", cat: "time", status: "soon", tagline: "大きな数字で現在時刻を表示します。" },
   { slug: "analog-clock", name: "アナログ時計", cat: "time", status: "soon", tagline: "針が動くアナログ時計を、大きな文字盤で表示します。" },

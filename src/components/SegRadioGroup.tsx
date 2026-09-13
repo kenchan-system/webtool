@@ -18,6 +18,8 @@ export function SegRadioGroup<T extends string>({
   options,
   value,
   onChange,
+  className = "seg",
+  optionClassName,
 }: {
   id?: string;
   ariaLabel?: string;
@@ -25,6 +27,10 @@ export function SegRadioGroup<T extends string>({
   options: SegOption<T>[];
   value: T;
   onChange: (v: T) => void;
+  /** ラッパーdivのクラス（既定は".seg"）。タイマーの選択肢グリッドなど、別デザインで再利用する場合に指定。 */
+  className?: string;
+  /** 各ボタンのクラス（既定は指定なし＝".seg button"のスタイルに従う）。 */
+  optionClassName?: string;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -47,7 +53,7 @@ export function SegRadioGroup<T extends string>({
 
   return (
     <div
-      className="seg"
+      className={className}
       id={id}
       role="radiogroup"
       aria-label={ariaLabel}
@@ -60,6 +66,7 @@ export function SegRadioGroup<T extends string>({
           key={opt.value}
           type="button"
           role="radio"
+          className={optionClassName}
           aria-checked={opt.value === value}
           tabIndex={opt.value === value ? 0 : -1}
           onClick={() => onChange(opt.value)}
