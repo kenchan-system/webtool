@@ -87,14 +87,3 @@ export function computeBmi(hStr: string, wStr: string): BmiResult {
 
   return { kind: "success", bmi, cat, zone, mood, msg: bmiSay(bmi), ideal, diff };
 }
-
-/** 全角数字/全角ピリオドを半角に変換し、数字とピリオド以外を除去。
- *  ピリオドは1つだけ残す（プロトタイプの sanitizeNumField の移植）。 */
-export function sanitizeDigits(value: string): string {
-  let s = value.replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0));
-  s = s.replace(/[．。]/g, ".");
-  s = s.replace(/[^0-9.]/g, "");
-  const i = s.indexOf(".");
-  if (i !== -1) s = s.slice(0, i + 1) + s.slice(i + 1).replace(/\./g, "");
-  return s;
-}

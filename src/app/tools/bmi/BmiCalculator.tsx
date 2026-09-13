@@ -1,37 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { KenchanAvatar } from "@/components/KenchanAvatar";
-import { computeBmi, gaugePct, sanitizeDigits } from "./lib";
-
-/** 全角数字などをその場でサニタイズしつつ、キャレット位置をできるだけ保つ
- *  入力欄。プロトタイプの sanitizeNumField の移植（コントロールド入力版）。 */
-function useSanitizedNumberField(initial = "") {
-  const [value, setValue] = useState(initial);
-  const ref = useRef<HTMLInputElement>(null);
-
-  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const el = e.target;
-    const raw = el.value;
-    const sanitized = sanitizeDigits(raw);
-    if (sanitized === raw) {
-      setValue(sanitized);
-      return;
-    }
-    const caret = (el.selectionStart ?? raw.length) - (raw.length - sanitized.length);
-    setValue(sanitized);
-    requestAnimationFrame(() => {
-      const pos = Math.max(0, caret);
-      try {
-        el.setSelectionRange(pos, pos);
-      } catch {
-        /* 一部のinputmodeではselectionRangeが使えないことがある */
-      }
-    });
-  }
-
-  return { value, onChange, ref };
-}
+import { useSanitizedNumberField } from "@/lib/numberInput";
+import { computeBmi, gaugePct } from "./lib";
 
 const DEBOUNCE_MS = 180;
 
@@ -75,7 +47,6 @@ export function BmiCalculator() {
                   inputMode="decimal"
                   placeholder="170"
                   autoComplete="off"
-                  ref={hField.ref}
                   value={hField.value}
                   onChange={hField.onChange}
                 />
@@ -91,7 +62,6 @@ export function BmiCalculator() {
                   inputMode="decimal"
                   placeholder="63"
                   autoComplete="off"
-                  ref={wField.ref}
                   value={wField.value}
                   onChange={wField.onChange}
                 />

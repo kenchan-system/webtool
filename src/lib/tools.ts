@@ -72,7 +72,7 @@ export const CATEGORIES: Category[] = [
 export const TOOLS: Tool[] = [
   // ---- 計算 ----
   { slug: "bmi", name: "BMI計算", cat: "calc", status: "live", live: 1, tagline: "身長と体重から、BMIと適正体重を計算します。" },
-  { slug: "tax", name: "税込・税抜計算", cat: "calc", status: "soon", tagline: "税抜から税込を、税込から税抜をすばやく計算します。" },
+  { slug: "tax", name: "税込・税抜計算", cat: "calc", status: "live", live: 2, tagline: "税抜から税込を、税込から税抜をすばやく計算します。" },
   { slug: "discount", name: "割引計算", cat: "calc", status: "soon", tagline: "定価と割引率から、割引後の価格と割引額を出します。" },
 
   // ---- 日付 ----
