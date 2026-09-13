@@ -28,3 +28,32 @@ export function todayAtMidnight(): Date {
   t.setHours(0, 0, 0, 0);
   return t;
 }
+
+/** 日数の差（b - a、時刻は考慮しない）。 */
+export function daysBetween(a: Date, b: Date): number {
+  return Math.round((b.getTime() - a.getTime()) / 86400000);
+}
+
+/** a<=b 前提で、差を「Y年Mか月D日」形式で返す。 */
+export function ymdDiff(a: Date, b: Date): string {
+  let y = b.getFullYear() - a.getFullYear();
+  let mo = b.getMonth() - a.getMonth();
+  let da = b.getDate() - a.getDate();
+  if (da < 0) {
+    mo--;
+    da += new Date(b.getFullYear(), b.getMonth(), 0).getDate();
+  }
+  if (mo < 0) {
+    y--;
+    mo += 12;
+  }
+  return `${y}年${mo}か月${da}日`;
+}
+
+/** dt からカレンダー上でn日進めた（負なら戻した）日付。 */
+export function addCalendarDays(dt: Date, n: number): Date {
+  const r = new Date(dt.getTime());
+  r.setDate(r.getDate() + n);
+  r.setHours(0, 0, 0, 0);
+  return r;
+}

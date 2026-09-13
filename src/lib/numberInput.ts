@@ -44,6 +44,39 @@ export function useSanitizedNumberField(initial = "") {
   return { value, onChange, setValue };
 }
 
+/** 全角数字を半角に変換し、数字以外を除去（整数のみ・カンマ整形なし）。
+ *  日数入力など、桁区切り表示が不要な整数欄向け。 */
+export function sanitizeIntDigits(value: string): string {
+  return value.replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/[^0-9]/g, "");
+}
+
+/** 整数のみの入力欄（桁区切りなし）。キャレット位置を保ちながらサニタイズする。 */
+export function useDigitsField(initial = "") {
+  const [value, setValue] = useState(initial);
+
+  function onChange(e: ChangeEvent<HTMLInputElement>) {
+    const el = e.target;
+    const raw = el.value;
+    const sanitized = sanitizeIntDigits(raw);
+    if (sanitized === raw) {
+      setValue(sanitized);
+      return;
+    }
+    const caret = (el.selectionStart ?? raw.length) - (raw.length - sanitized.length);
+    setValue(sanitized);
+    requestAnimationFrame(() => {
+      const pos = Math.max(0, caret);
+      try {
+        el.setSelectionRange(pos, pos);
+      } catch {
+        /* noop */
+      }
+    });
+  }
+
+  return { value, onChange, setValue };
+}
+
 /** 整数のみ・入力しながら3桁区切りのカンマが自動で付く金額欄
  *  （税込税抜・割引などの「金額」入力向け）。状態は常にカンマ抜きの数字文字列。 */
 export function useThousandsAmountField(initial = "") {
