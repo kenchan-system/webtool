@@ -2296,3 +2296,192 @@ h1 {
     padding: 16px 36px;
   }
 }
+
+/* ---------- デジタル時計 ---------- */
+.clk-kc {
+  margin: 14px 0 0;
+}
+.clk-panel {
+  position: relative;
+  max-width: 680px;
+  margin: 24px auto 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 10px 34px var(--shadow);
+  padding: 72px 40px 36px;
+  text-align: center;
+}
+.clk-bigmode-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+}
+.clk-bigmode-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.clk-time-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px;
+}
+.clk-ampm {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+.clk-time {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 5.6rem;
+  line-height: 1;
+  color: var(--accent-strong);
+  white-space: nowrap;
+}
+.clk-time-digit {
+  display: inline-block;
+  width: 0.62em;
+  text-align: center;
+}
+.clk-time-colon {
+  display: inline-block;
+  width: 0.32em;
+  text-align: center;
+}
+.clk-date {
+  margin-top: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+.clk-settings {
+  margin: 32px -40px -36px;
+  padding: 28px 40px 32px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 20px 20px;
+}
+.clk-settings-label {
+  margin: 20px 0 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+.clk-settings-label:first-child {
+  margin-top: 0;
+}
+.clk-opt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.clk-opt {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 9px 0;
+  border-radius: 9px;
+  border: 1.5px solid var(--field-line);
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+}
+.clk-opt:hover {
+  border-color: var(--accent);
+}
+.clk-opt[aria-checked="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.clk-bigmode {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: var(--page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clk-bigmode-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.clk-bigmode-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.clk-bigmode-body {
+  text-align: center;
+}
+.clk-bigmode-body .clk-time {
+  font-size: clamp(4.5rem, 20vw, 20rem);
+}
+.clk-bigmode-body .clk-ampm {
+  font-size: 1.8rem;
+}
+.clk-bigmode-body .clk-date {
+  font-size: 1.3rem;
+  margin-top: 24px;
+}
+@media (max-width: 560px) {
+  .clk-time {
+    font-size: 3.2rem;
+  }
+  .clk-panel {
+    padding: 64px 18px 28px;
+  }
+  .clk-settings {
+    margin: 24px -18px -28px;
+    padding: 22px 18px 24px;
+  }
+  .clk-bigmode-body .clk-date {
+    margin-top: 18px;
+  }
+}
+
+.clock-switch-link {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  text-decoration: none;
+}
+.clock-switch-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+@media (max-width: 560px) {
+  .clock-switch-link {
+    font-size: 0.72rem;
+    padding: 5px 10px;
+  }
+}
