@@ -79,7 +79,7 @@ export const TOOLS: Tool[] = [
   { slug: "age", name: "年齢・学年計算", cat: "date", status: "live", live: 4, tagline: "生年月日から、満年齢といまの学年を調べます。" },
   { slug: "days", name: "日数計算", cat: "date", status: "live", live: 5, tagline: "2つの日付の間の日数や、◯日後の日付を計算します。" },
   { slug: "wareki", name: "和暦・西暦変換", cat: "date", status: "live", live: 6, tagline: "令和・平成・昭和と西暦を相互に変換します。" },
-  { slug: "calendar", name: "カレンダー", cat: "date", status: "soon", tagline: "祝日つきの月間・年間カレンダーを表示・印刷できます。" },
+  { slug: "calendar", name: "カレンダー", cat: "date", status: "live", live: 7, tagline: "祝日つきの月間・年間カレンダーを表示・印刷できます。" },
 
   // ---- 時間 ----
   { slug: "timer", name: "タイマー", cat: "time", status: "soon", tagline: "指定した時間でお知らせするカウントダウンタイマー。" },
