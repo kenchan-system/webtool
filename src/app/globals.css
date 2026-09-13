@@ -2485,3 +2485,173 @@ h1 {
     padding: 5px 10px;
   }
 }
+
+/* ---------- アナログ時計 ---------- */
+.aclk-kc {
+  margin: 14px 0 0;
+}
+.aclk-panel {
+  position: relative;
+  max-width: 680px;
+  margin: 24px auto 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 10px 34px var(--shadow);
+  padding: 48px 40px 36px;
+  text-align: center;
+}
+.aclk-bigmode-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+}
+.aclk-bigmode-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.aclk-face {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+.aclk-face-circle {
+  fill: var(--card);
+  stroke: var(--border);
+  stroke-width: 2;
+}
+.aclk-tick {
+  stroke: var(--field-line);
+  stroke-width: 1.5;
+}
+.aclk-tick-major {
+  stroke: var(--muted);
+  stroke-width: 2.5;
+}
+.aclk-numeral {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  fill: var(--ink);
+}
+.aclk-hand {
+  stroke: var(--accent-strong);
+  stroke-linecap: round;
+}
+.aclk-hand-hour {
+  stroke-width: 5;
+}
+.aclk-hand-minute {
+  stroke-width: 3.5;
+}
+.aclk-hand-second {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+.aclk-hub {
+  fill: var(--accent-strong);
+}
+.aclk-date {
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+.aclk-settings {
+  margin: 32px -40px -36px;
+  padding: 28px 40px 32px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 20px 20px;
+}
+.aclk-settings-label {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+.aclk-opt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.aclk-opt {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 9px 0;
+  border-radius: 9px;
+  border: 1.5px solid var(--field-line);
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+}
+.aclk-opt:hover {
+  border-color: var(--accent);
+}
+.aclk-opt[aria-checked="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.aclk-bigmode {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: var(--page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aclk-bigmode-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.aclk-bigmode-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.aclk-bigmode-body {
+  text-align: center;
+}
+.aclk-bigmode-body .aclk-face {
+  width: min(80vw, 80vh, 640px);
+  max-width: none;
+}
+.aclk-bigmode-body .aclk-date {
+  font-size: 1.3rem;
+  margin-top: 32px;
+}
+@media (max-width: 560px) {
+  .aclk-panel {
+    padding: 40px 18px 28px;
+  }
+  .aclk-settings {
+    margin: 24px -18px -28px;
+    padding: 22px 18px 24px;
+  }
+  .aclk-bigmode-body .aclk-date {
+    margin-top: 20px;
+  }
+}
