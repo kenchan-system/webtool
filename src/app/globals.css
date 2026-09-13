@@ -737,6 +737,172 @@ h1 {
   animation: rise 0.22s ease both;
 }
 
+/* 年(text)＋月(select)＋日(select) の日付入力（年齢・日数計算など） */
+.date-input {
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.date-input input {
+  width: 5ch;
+  flex: 0 0 auto;
+  font-size: 1rem;
+}
+.date-input select {
+  width: auto;
+  min-width: 0;
+  flex: 0 0 auto;
+  font-size: 1rem;
+  padding: 12px 4px;
+}
+.date-input span {
+  margin-right: 8px;
+}
+
+/* 税込・税抜・割引: 大きな答え＋内訳 */
+.tax-answer {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+}
+.tax-answer-k {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+.tax-answer-v {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--accent-strong);
+  font-variant-numeric: tabular-nums;
+}
+.tax-breakdown {
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.tax-breakdown > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 16px;
+  font-size: 0.92rem;
+}
+.tax-breakdown > div + div {
+  border-top: 1px solid var(--border);
+}
+.tax-breakdown dt {
+  color: var(--muted);
+}
+.tax-breakdown dd {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.tax-breakdown .is-answer {
+  background: var(--accent-soft);
+}
+.tax-breakdown .is-answer dd {
+  color: var(--accent-strong);
+}
+
+/* 税込・税抜／割引 早見表 */
+.rate-chart {
+  border-collapse: collapse;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  width: 100%;
+}
+.rate-chart th,
+.rate-chart td {
+  padding: 6px 14px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+}
+.rate-chart thead th {
+  background: var(--surface);
+  color: var(--muted);
+  font-weight: 700;
+}
+.rate-chart tbody th {
+  font-weight: 700;
+  color: var(--muted);
+}
+.rate-chart tbody tr:last-child th,
+.rate-chart tbody tr:last-child td {
+  border-bottom: 0;
+}
+.rate-chart tr.is-hit td,
+.rate-chart tr.is-hit th {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+/* 年齢早見表: 行が多いので高さを抑えたスクロール枠、見出しは固定 */
+.chart-scroll--tall {
+  max-height: 440px;
+  overflow: auto;
+}
+.age-chart {
+  border-collapse: collapse;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  width: 100%;
+}
+.age-chart th,
+.age-chart td {
+  padding: 6px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.age-chart td.num {
+  text-align: right;
+}
+.age-chart thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface);
+  color: var(--muted);
+  font-weight: 700;
+}
+.age-chart tbody th {
+  position: sticky;
+  left: 0;
+  background: var(--card);
+  font-weight: 700;
+  color: var(--muted);
+}
+.age-chart tr.is-hit td,
+.age-chart tr.is-hit th {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+/* 列が少なく1列あたりが広い早見表（年齢早見表）：均等幅＋中央寄せで整った格子に */
+.age-chart--eq {
+  table-layout: fixed;
+}
+.age-chart--eq th,
+.age-chart--eq td,
+.age-chart--eq td.num {
+  text-align: center;
+  white-space: normal;
+}
+.age-detail {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
 /* BMI result: big number + zone pill */
 .bmi-headline {
   display: flex;

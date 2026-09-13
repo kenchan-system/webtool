@@ -76,7 +76,7 @@ export const TOOLS: Tool[] = [
   { slug: "discount", name: "割引計算", cat: "calc", status: "live", live: 3, tagline: "定価と割引率から、割引後の価格と割引額を出します。" },
 
   // ---- 日付 ----
-  { slug: "age", name: "年齢・学年計算", cat: "date", status: "soon", tagline: "生年月日から、満年齢といまの学年を調べます。" },
+  { slug: "age", name: "年齢・学年計算", cat: "date", status: "live", live: 4, tagline: "生年月日から、満年齢といまの学年を調べます。" },
   { slug: "days", name: "日数計算", cat: "date", status: "soon", tagline: "2つの日付の間の日数や、◯日後の日付を計算します。" },
   { slug: "wareki", name: "和暦・西暦変換", cat: "date", status: "soon", tagline: "令和・平成・昭和と西暦を相互に変換します。" },
   { slug: "calendar", name: "カレンダー", cat: "date", status: "soon", tagline: "祝日つきの月間・年間カレンダーを表示・印刷できます。" },
