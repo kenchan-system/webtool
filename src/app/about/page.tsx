@@ -16,7 +16,7 @@ export default function AboutPage() {
       </nav>
       <h1>運営者情報</h1>
       <div className="legal-doc">
-        <p className="legal-date">最終更新日：2026年9月11日</p>
+        <p className="legal-date">最終更新日：2026年9月14日</p>
         <div className="prose">
           <h2>サイトについて</h2>
           <p>
@@ -27,12 +27,11 @@ export default function AboutPage() {
 
           <h2>運営者</h2>
           <p>
-            個人で企画・制作・運営しています（運営者名：ケンちゃん運営）。
-            正式公開に合わせて、この欄に運営者の情報を追記する予定です。
+            個人で企画・制作・運営しています。サイト名の「ケンちゃん」は、各ツールで案内役をつとめるキャラクターの名前です。
           </p>
 
           <h2>開設</h2>
-          <p>2026年（試作・準備中）</p>
+          <p>2026年9月</p>
 
           <h2>お問い合わせ</h2>
           <p>
@@ -48,7 +47,7 @@ export default function AboutPage() {
           <h2>更新履歴</h2>
           <ul>
             <li>2026年9月　Next.js版の開発を開始</li>
-            <li>2026年　サイト開設（試作）</li>
+            <li>2026年　サイト開設</li>
           </ul>
         </div>
       </div>
