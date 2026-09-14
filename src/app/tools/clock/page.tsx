@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ClockApp } from "./ClockApp";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "デジタル時計｜大きな数字で見やすい現在時刻表示",
   description:
     "大きな数字で現在時刻を表示するシンプルなデジタル時計。日付・曜日つき、12時間/24時間表示・秒の表示ON/OFF・大画面表示に対応。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("デジタル時計")}&tagline=${encodeURIComponent("大きな数字で現在時刻を表示します。")}`],
+  },
 };
 
 const FAQ = [
@@ -45,9 +49,7 @@ export default function ClockPage() {
 
       <ClockApp />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { BmiCalculator } from "./BmiCalculator";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "BMI計算｜身長と体重で自動計算・適正体重と早見表",
   description:
     "身長と体重を入れるだけでBMIと肥満度、BMI22基準の適正体重、差を自動計算。判定の目安がわかるバンド表示と、身長×体重の早見表つき。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("BMI計算")}&tagline=${encodeURIComponent("身長と体重から、BMIと適正体重を計算します。")}`],
+  },
 };
 
 const FAQ = [
@@ -60,9 +64,7 @@ export default function BmiPage() {
 
       <BmiCalculator />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

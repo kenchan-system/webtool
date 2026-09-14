@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { DaysCalculator } from "./DaysCalculator";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "日数計算｜2つの日付の間の日数・◯日後の日付をすぐ計算",
   description:
     "2つの日付の間の日数や、◯日後・◯日前の日付をすぐに計算。初日を含める・含めない数え方の違い、「◯年◯か月◯日」の期間の長さもあわせて表示。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("日数計算")}&tagline=${encodeURIComponent("2つの日付の間の日数や、◯日後の日付を計算します。")}`],
+  },
 };
 
 const FAQ = [
@@ -41,9 +45,7 @@ export default function DaysPage() {
 
       <DaysCalculator />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

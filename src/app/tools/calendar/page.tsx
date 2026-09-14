@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { CalendarClient } from "./CalendarClient";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "カレンダー｜祝日つきの月間・年間カレンダーを表示・印刷",
   description:
     "祝日つきの月間・年間カレンダーを表示・印刷できます。週の始まり（日曜／月曜）や週番号、六曜（大安・仏滅など）の表示切り替えにも対応。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("カレンダー")}&tagline=${encodeURIComponent("祝日つきの月間・年間カレンダーを表示・印刷できます。")}`],
+  },
 };
 
 const FAQ = [
@@ -45,9 +49,7 @@ export default function CalendarPage() {
 
       <CalendarClient />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

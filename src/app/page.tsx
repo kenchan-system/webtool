@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { KenchanAvatar } from "@/components/KenchanAvatar";
 import { CATEGORIES_PUBLISHED, toolsIn, newestTools } from "@/lib/tools";
+import { AdSlot } from "@/components/AdSlot";
 
 export default function TopPage() {
   const quick = newestTools();
@@ -57,9 +58,7 @@ export default function TopPage() {
         ))}
       </div>
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <section className="about-block" aria-labelledby="about-h2">
         <h2 id="about-h2">このサイトについて</h2>

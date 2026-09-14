@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       </nav>
       <h1>プライバシーポリシー</h1>
       <div className="legal-doc">
-        <p className="legal-date">最終更新日：2026年9月8日</p>
+        <p className="legal-date">最終更新日：2026年9月14日</p>
         <div className="prose">
           <h2>1. 基本方針</h2>
           <p>
@@ -74,8 +74,8 @@ export default function PrivacyPage() {
 
           <h2>6. 同意の管理（EEA・英国等の利用者）</h2>
           <p>
-            欧州経済領域（EEA）、英国、スイスなどからアクセスした利用者に対しては、Cookie の使用および広告のパーソナライズについて同意を確認するメッセージを表示し、
-            利用者の選択に従って Cookie の利用を制御します。
+            当サイトで広告配信を開始する際には、欧州経済領域（EEA）、英国、スイスなどからアクセスした利用者に対して、Cookie の使用および広告のパーソナライズについて同意を確認するメッセージを表示し、
+            利用者の選択に従って Cookie の利用を制御する仕組みを導入します。
           </p>
 
           <h2>7. 第三者への提供</h2>

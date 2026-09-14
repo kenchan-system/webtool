@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { WorldClockApp } from "./WorldClockApp";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "世界時計｜主要都市の現在時刻を一覧表示",
   description:
     "ニューヨーク・ロンドン・シドニーなど主要都市の現在時刻を一覧表示。現在地を自動判定し、日付が違う都市には前日・翌日バッジ表示。都市の追加・大画面表示に対応。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("世界時計")}&tagline=${encodeURIComponent("主要都市の現在時刻をまとめて表示します。")}`],
+  },
 };
 
 const FAQ = [
@@ -45,9 +49,7 @@ export default function WorldClockPage() {
 
       <WorldClockApp />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

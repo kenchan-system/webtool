@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { AgeCalculator } from "./AgeCalculator";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "年齢・学年計算｜生年月日から満年齢といまの学年をすぐ計算",
   description:
     "生年月日から、満年齢といまの学年をすぐに計算。生まれた曜日・干支・星座、次の誕生日までの日数もあわせて表示。基準日を指定して過去・未来の年齢も計算できます。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("年齢・学年計算")}&tagline=${encodeURIComponent("生年月日から、満年齢といまの学年を調べます。")}`],
+  },
 };
 
 const FAQ = [
@@ -41,9 +45,7 @@ export default function AgePage() {
 
       <AgeCalculator />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

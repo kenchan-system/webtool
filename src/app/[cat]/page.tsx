@@ -2,10 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { KenchanAvatar } from "@/components/KenchanAvatar";
-import { CATEGORIES, CAT_BY_SLUG, toolsIn } from "@/lib/tools";
+import { CATEGORIES_PUBLISHED, CAT_BY_SLUG, catHasLiveTools, toolsIn } from "@/lib/tools";
+import { AdSlot } from "@/components/AdSlot";
 
 export function generateStaticParams() {
-  return CATEGORIES.map((c) => ({ cat: c.slug }));
+  return CATEGORIES_PUBLISHED.map((c) => ({ cat: c.slug }));
 }
 
 export async function generateMetadata({
@@ -15,10 +16,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { cat } = await params;
   const category = CAT_BY_SLUG[cat];
-  if (!category) return {};
+  if (!category || !catHasLiveTools(category.slug)) return {};
   return {
     title: `${category.name}の無料ツール一覧`,
     description: category.intro,
+    openGraph: {
+      images: [`/og?title=${encodeURIComponent(category.name)}&tagline=${encodeURIComponent(category.tagline)}`],
+    },
   };
 }
 
@@ -29,7 +33,7 @@ export default async function CategoryPage({
 }) {
   const { cat } = await params;
   const category = CAT_BY_SLUG[cat];
-  if (!category) notFound();
+  if (!category || !catHasLiveTools(category.slug)) notFound();
 
   const tools = toolsIn(category.slug);
 
@@ -63,9 +67,7 @@ export default async function CategoryPage({
           </p>
         )}
       </div>
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
     </div>
   );
 }

@@ -24,9 +24,14 @@ export async function generateMetadata({ params }: { params: Promise<{ year: str
   const { year } = await params;
   const y = parseYear(year);
   if (!y) return {};
+  const title = `${y}年のカレンダー｜祝日一覧・印刷対応`;
+  const description = `${y}年の祝日つきカレンダーを表示・印刷。${y}年の祝日をすべて掲載し、週の始まりや週番号の表示も切り替えられます。無料・登録不要。`;
   return {
-    title: `${y}年のカレンダー｜祝日一覧・印刷対応`,
-    description: `${y}年の祝日つきカレンダーを表示・印刷。${y}年の祝日をすべて掲載し、週の始まりや週番号の表示も切り替えられます。無料・登録不要。`,
+    title,
+    description,
+    openGraph: {
+      images: [`/og?title=${encodeURIComponent(`${y}年のカレンダー`)}&tagline=${encodeURIComponent("祝日つきの月間・年間カレンダーを表示・印刷できます。")}`],
+    },
   };
 }
 

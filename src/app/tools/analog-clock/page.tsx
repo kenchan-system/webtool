@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { AnalogClockApp } from "./AnalogClockApp";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "アナログ時計｜針が動く大きな文字盤の時計",
   description:
     "針が動く、大きな文字盤のアナログ時計。時針・分針・秒針が現在時刻に合わせて動き、日付・曜日も表示。秒針の表示ON/OFF・大画面表示に対応。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("アナログ時計")}&tagline=${encodeURIComponent("針が動くアナログ時計を、大きな文字盤で表示します。")}`],
+  },
 };
 
 const FAQ = [
@@ -45,9 +49,7 @@ export default function AnalogClockPage() {
 
       <AnalogClockApp />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

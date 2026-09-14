@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { DiscountCalculator } from "./DiscountCalculator";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "割引計算｜定価と割引率から割引後の価格をすぐ計算",
   description:
     "定価と割引率から、割引後の価格と割引額をすぐに計算。10%・20%・30%・半額や任意の割引率に対応し、「○割引」と「○％OFF」の対応・二重割引の計算方法・割引早見表つき。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("割引計算")}&tagline=${encodeURIComponent("定価と割引率から、割引後の価格と割引額を出します。")}`],
+  },
 };
 
 const FAQ = [
@@ -57,9 +61,7 @@ export default function DiscountPage() {
 
       <DiscountCalculator />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

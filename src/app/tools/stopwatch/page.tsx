@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { StopwatchApp } from "./StopwatchApp";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "ストップウォッチ｜ラップ計測対応のシンプルなストップウォッチ",
   description:
     "「開始」を押すだけの経過時間計測。1/100秒まで表示し、ラップ（区間）タイムを何度でも記録。ラップのコピー・大画面表示・キーボード操作にも対応。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("ストップウォッチ")}&tagline=${encodeURIComponent("経過時間を計測します。ラップ（区間）計測にも対応。")}`],
+  },
 };
 
 const FAQ = [
@@ -49,9 +53,7 @@ export default function StopwatchPage() {
 
       <StopwatchApp />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

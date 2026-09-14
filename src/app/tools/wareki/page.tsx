@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { WarekiCalculator } from "./WarekiCalculator";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "和暦・西暦変換｜令和・平成・昭和と西暦をすぐ変換",
   description:
     "令和・平成・昭和・大正・明治と西暦をすぐに相互変換。生年月日の変換、改元があった年の元号判定、「S60.4.1」のような略号入力にも対応。和暦早見表つき。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("和暦・西暦変換")}&tagline=${encodeURIComponent("令和・平成・昭和と西暦を相互に変換します。")}`],
+  },
 };
 
 const FAQ = [
@@ -53,9 +57,7 @@ export default function WarekiPage() {
 
       <WarekiCalculator />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

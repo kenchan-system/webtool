@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { TimerApp } from "./TimerApp";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "タイマー｜シンプルなカウントダウンタイマー",
   description:
     "時間を決めて「開始」を押すだけのシンプルなカウントダウンタイマー。よく使う時間をワンタップで、音の種類・音量・大画面表示にも対応。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("タイマー")}&tagline=${encodeURIComponent("指定した時間でお知らせするカウントダウンタイマー。")}`],
+  },
 };
 
 const FAQ = [
@@ -53,9 +57,7 @@ export default function TimerPage() {
 
       <TimerApp />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>

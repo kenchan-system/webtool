@@ -1,11 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { TaxCalculator } from "./TaxCalculator";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "消費税計算（税込・税抜）｜10%・8%・軽減税率に対応",
   description:
     "税抜から税込、税込から税抜をすぐに計算。消費税10%・8%（軽減税率）や任意の税率に対応し、消費税額の内訳・税込早見表・軽減税率の解説つき。無料・登録不要。",
+  openGraph: {
+    images: [`/og?title=${encodeURIComponent("税込・税抜計算")}&tagline=${encodeURIComponent("税抜から税込を、税込から税抜をすばやく計算します。")}`],
+  },
 };
 
 const FAQ = [
@@ -61,9 +65,7 @@ export default function TaxPage() {
 
       <TaxCalculator />
 
-      <div className="ad">
-        <span className="tag">広告</span>広告スペース（準備中）
-      </div>
+      <AdSlot />
 
       <div className="tool-doc">
         <p className="doc-eyebrow">このツールについて</p>
