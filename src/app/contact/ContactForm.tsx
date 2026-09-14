@@ -95,7 +95,7 @@ export function ContactForm() {
           <textarea
             id="contact-message"
             required
-            rows={6}
+            rows={4}
             placeholder="不具合の内容、ご意見・ご要望などをご記入ください。"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
