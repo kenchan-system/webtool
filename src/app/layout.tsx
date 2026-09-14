@@ -3,6 +3,7 @@ import { Zen_Maru_Gothic, Zen_Kaku_Gothic_New } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { GA_MEASUREMENT_ID, SITE_NAME, SITE_URL } from "@/lib/siteConfig";
 import "./globals.css";
 
@@ -64,6 +65,7 @@ export default function RootLayout({
   return (
     <html lang="ja" className={`${zenMaruGothic.variable} ${zenKakuGothicNew.variable}`}>
       <body>
+        <ScrollToTop />
         <Header />
         <main>{children}</main>
         <Footer />
