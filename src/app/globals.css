@@ -636,6 +636,59 @@ h1 {
   color: var(--faint);
 }
 
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 20px;
+}
+.contact-form .input textarea {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 12px 0;
+  width: 100%;
+  resize: vertical;
+}
+.contact-form .input textarea::placeholder {
+  color: var(--faint);
+  font-weight: 400;
+}
+.contact-submit {
+  align-self: flex-start;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 10px 28px;
+  cursor: pointer;
+}
+.contact-submit:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+}
+.contact-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.contact-status {
+  font-size: 0.9rem;
+}
+.contact-status--ok {
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+.contact-status--error {
+  color: var(--danger);
+}
+
 .is-hidden {
   display: none !important;
 }
