@@ -18,8 +18,12 @@ export default function ContactPage() {
       <div className="legal-doc">
         <div className="prose">
           <p>
-            お問い合わせ窓口は準備中です。サイトの正式公開に合わせて、お問い合わせフォームまたは連絡用のメールアドレスをこのページに掲載します。
+            ツールの不具合、ご意見・ご要望、掲載内容の誤りのご指摘などは、下記のメールアドレスまでご連絡ください。
           </p>
+          <p>
+            <a href="mailto:info@kenchan-system.com">info@kenchan-system.com</a>
+          </p>
+          <p>内容を確認のうえ、順次対応いたします。返信までお時間をいただく場合がありますので、あらかじめご了承ください。</p>
         </div>
       </div>
     </div>
