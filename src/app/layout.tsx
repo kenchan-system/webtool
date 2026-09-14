@@ -3,20 +3,29 @@ import { Zen_Maru_Gothic, Zen_Kaku_Gothic_New } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { GA_MEASUREMENT_ID, SITE_NAME, SITE_URL } from "@/lib/siteConfig";
 import "./globals.css";
 
 // プロトタイプではGoogle Fontsの<link>で読み込んでいたが、Next.jsでは
 // next/font/googleでセルフホスト化する（レイアウトシフト対策・配信の安定性向上）。
 // CSS変数名（--font-display / --font-body）はプロトタイプのCSSとそろえてある。
+//
+// ウェイトは実際にCSSで使われているものだけに絞っている（軽量化）。
+// 日本語グリフを含む書体はウェイトごとにUnicode範囲別の分割ファイルが
+// 大量に生成されるため、使っていないウェイトを1つ削るだけでも転送量への
+// 影響が大きい。実測（全ページの computed font-weight を確認）の結果：
+// - Zen Maru Gothic（--font-display）は 700 のみ使用（500は未使用）
+// - Zen Kaku Gothic New（--font-body）は 400・700 が主。500はヘッダーの
+//   .brand-tagline 1箇所のみだったため、そちらを400に変更して500ごと削減した
 const zenMaruGothic = Zen_Maru_Gothic({
-  weight: ["500", "700"],
+  weight: ["700"],
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
 });
 const zenKakuGothicNew = Zen_Kaku_Gothic_New({
-  weight: ["400", "500", "700"],
+  weight: ["400", "700"],
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
@@ -56,6 +65,7 @@ export default function RootLayout({
   return (
     <html lang="ja" className={`${zenMaruGothic.variable} ${zenKakuGothicNew.variable}`}>
       <body>
+        <ScrollToTop />
         <Header />
         <main>{children}</main>
         <Footer />
