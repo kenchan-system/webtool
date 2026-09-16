@@ -493,6 +493,15 @@ h1 {
   line-height: 1;
   flex: 0 0 auto;
 }
+@media (max-width: 560px) {
+  .tool-panel {
+    grid-template-columns: 1fr;
+  }
+  .tool-input {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+}
 
 .tool-doc {
   max-width: var(--read);
