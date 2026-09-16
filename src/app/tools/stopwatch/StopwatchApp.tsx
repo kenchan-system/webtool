@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { BigModeOverlay } from "@/components/BigModeOverlay";
 import { CopyButton } from "@/components/CopyButton";
 import { KenchanBubble } from "@/components/KenchanBubble";
@@ -264,6 +265,9 @@ export function StopwatchApp() {
       <KenchanBubble className="sw-kc">{kcMsg}</KenchanBubble>
 
       <div className="sw-panel">
+        <Link href="/tools/timer" className="clock-switch-link">
+          ⏲ タイマーを見る
+        </Link>
         <button type="button" className="sw-bigmode-btn" onClick={enterBigMode}>
           大画面
         </button>

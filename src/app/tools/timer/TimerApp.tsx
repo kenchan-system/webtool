@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import Link from "next/link";
 import { BigModeOverlay } from "@/components/BigModeOverlay";
 import { KenchanBubble } from "@/components/KenchanBubble";
 import { SegRadioGroup } from "@/components/SegRadioGroup";
@@ -356,6 +357,9 @@ export function TimerApp() {
       <KenchanBubble className="timer-kc">{kcMsg}</KenchanBubble>
 
       <div className={"timer-panel" + (state === "done" ? " is-done" : "")}>
+        <Link href="/tools/stopwatch" className="clock-switch-link">
+          ⏱ ストップウォッチを見る
+        </Link>
         <button type="button" className="timer-bigmode-btn" onClick={enterBigMode}>
           大画面
         </button>
