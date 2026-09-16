@@ -2108,6 +2108,7 @@ h1 {
   color: var(--accent);
 }
 .sw-time {
+  margin-top: 16px;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 5.6rem;
