@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { AgeCalculator } from "./AgeCalculator";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "年齢・学年計算｜生年月日から満年齢といまの学年をすぐ計算",
@@ -132,14 +133,11 @@ export default function AgePage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "日付" },
-                  { "@type": "ListItem", position: 3, name: "年齢・学年計算" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "日付", path: "/date" },
+                  { name: "年齢・学年計算", path: "/tools/age" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({

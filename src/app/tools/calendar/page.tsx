@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { CalendarClient } from "./CalendarClient";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "カレンダー｜祝日つきの月間・年間カレンダーを表示・印刷",
@@ -125,14 +126,11 @@ export default function CalendarPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "日付" },
-                  { "@type": "ListItem", position: 3, name: "カレンダー" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "日付", path: "/date" },
+                  { name: "カレンダー", path: "/tools/calendar" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({

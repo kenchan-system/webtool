@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { WarekiCalculator } from "./WarekiCalculator";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "和暦・西暦変換｜令和・平成・昭和と西暦をすぐ変換",
@@ -162,14 +163,11 @@ export default function WarekiPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "日付" },
-                  { "@type": "ListItem", position: 3, name: "和暦・西暦変換" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "日付", path: "/date" },
+                  { name: "和暦・西暦変換", path: "/tools/wareki" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({

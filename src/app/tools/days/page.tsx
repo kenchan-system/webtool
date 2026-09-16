@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { DaysCalculator } from "./DaysCalculator";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "日数計算｜2つの日付の間の日数・◯日後の日付をすぐ計算",
@@ -114,14 +115,11 @@ export default function DaysPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "日付" },
-                  { "@type": "ListItem", position: 3, name: "日数計算" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "日付", path: "/date" },
+                  { name: "日数計算", path: "/tools/days" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({

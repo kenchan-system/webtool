@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { TaxCalculator } from "./TaxCalculator";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "消費税計算（税込・税抜）｜10%・8%・軽減税率に対応",
@@ -176,14 +177,11 @@ export default function TaxPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "計算" },
-                  { "@type": "ListItem", position: 3, name: "税込・税抜計算" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "計算", path: "/calc" },
+                  { name: "税込・税抜計算", path: "/tools/tax" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({

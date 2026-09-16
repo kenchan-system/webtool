@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { DiscountCalculator } from "./DiscountCalculator";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "割引計算｜定価と割引率から割引後の価格をすぐ計算",
@@ -159,14 +160,11 @@ export default function DiscountPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "計算" },
-                  { "@type": "ListItem", position: 3, name: "割引計算" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "計算", path: "/calc" },
+                  { name: "割引計算", path: "/tools/discount" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({

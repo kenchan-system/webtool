@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { TimerApp } from "./TimerApp";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "タイマー｜シンプルなカウントダウンタイマー",
@@ -135,14 +136,11 @@ export default function TimerPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "時間" },
-                  { "@type": "ListItem", position: 3, name: "タイマー" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "時間", path: "/time" },
+                  { name: "タイマー", path: "/tools/timer" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({

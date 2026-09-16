@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { BmiCalculator } from "./BmiCalculator";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "BMI計算｜身長と体重で自動計算・適正体重と早見表",
@@ -170,14 +171,11 @@ export default function BmiPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "計算" },
-                  { "@type": "ListItem", position: 3, name: "BMI計算" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "計算", path: "/calc" },
+                  { name: "BMI計算", path: "/tools/bmi" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({

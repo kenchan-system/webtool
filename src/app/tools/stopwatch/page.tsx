@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { StopwatchApp } from "./StopwatchApp";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "ストップウォッチ｜ラップ計測対応のシンプルなストップウォッチ",
@@ -131,14 +132,11 @@ export default function StopwatchPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "時間" },
-                  { "@type": "ListItem", position: 3, name: "ストップウォッチ" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "時間", path: "/time" },
+                  { name: "ストップウォッチ", path: "/tools/stopwatch" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({

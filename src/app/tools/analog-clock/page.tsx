@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { AnalogClockApp } from "./AnalogClockApp";
 import { AdSlot } from "@/components/AdSlot";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "アナログ時計｜針が動く大きな文字盤の時計",
@@ -121,14 +122,11 @@ export default function AnalogClockPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "トップ" },
-                  { "@type": "ListItem", position: 2, name: "時間" },
-                  { "@type": "ListItem", position: 3, name: "アナログ時計" },
-                ],
-              },
+              breadcrumbJsonLd([
+                  { name: "トップ", path: "/" },
+                  { name: "時間", path: "/time" },
+                  { name: "アナログ時計", path: "/tools/analog-clock" },
+                ]),
               {
                 "@type": "FAQPage",
                 mainEntity: FAQ.map((f) => ({
