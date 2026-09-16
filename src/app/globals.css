@@ -43,6 +43,11 @@
   --chart-normal: var(--accent-soft);
   --chart-over1: var(--warn-bg);
   --chart-over2: #f4ddd6;
+
+  /* 本文はOS標準フォントのみを使う（Webフォントの追加ダウンロードなし）。
+     見出し（--font-display）だけ引き続きWebフォントをセルフホストする。 */
+  --font-body: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI",
+    "Yu Gothic", "Meiryo", sans-serif;
 }
 
 /* vertical rhythm: every gap / margin / padding below is a multiple of 4px */
