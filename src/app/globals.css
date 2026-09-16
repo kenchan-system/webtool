@@ -92,6 +92,33 @@ a:hover {
   border: 0;
 }
 
+/* 通常は.sr-onlyと同様に隠し、キーボードフォーカス時だけ画面左上に表示する */
+.skip-link {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 0 0 8px 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.skip-link:focus {
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+}
+
 /* full-bleed bars (header/footer/notice); inner alignment tracks the page frame */
 .page {
   width: 100%;
@@ -1983,6 +2010,12 @@ h1 {
   height: 6px;
   border-radius: 999px;
   background: var(--border);
+}
+.timer-slider-field input[type="range"]:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px var(--accent-soft), 0 1px 4px var(--shadow);
+}
+.timer-slider-field input[type="range"]:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px var(--accent-soft), 0 1px 4px var(--shadow);
 }
 .timer-custom .field-hint {
   margin-top: 14px;

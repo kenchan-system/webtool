@@ -65,9 +65,14 @@ export default function RootLayout({
   return (
     <html lang="ja" className={`${zenMaruGothic.variable} ${zenKakuGothicNew.variable}`}>
       <body>
+        <a href="#main-content" className="skip-link">
+          メインコンテンツへスキップ
+        </a>
         <ScrollToTop />
         <Header />
-        <main>{children}</main>
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
         <Footer />
         <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
       </body>
