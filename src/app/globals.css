@@ -1766,7 +1766,7 @@ h1 {
   border: 1px solid var(--border);
   border-radius: 20px;
   box-shadow: 0 10px 34px var(--shadow);
-  padding: 40px 40px 36px;
+  padding: 48px 40px 36px;
   text-align: center;
 }
 .timer-bigmode-btn {
@@ -2056,7 +2056,7 @@ h1 {
     font-size: clamp(3rem, 20vw, 12rem);
   }
   .timer-panel {
-    padding: 28px 18px;
+    padding: 40px 18px 28px;
   }
   .timer-settings {
     margin: 24px -18px -28px;
@@ -2086,7 +2086,7 @@ h1 {
   border: 1px solid var(--border);
   border-radius: 20px;
   box-shadow: 0 10px 34px var(--shadow);
-  padding: 40px 40px 36px;
+  padding: 48px 40px 36px;
   text-align: center;
 }
 .sw-bigmode-btn {
@@ -2337,7 +2337,7 @@ h1 {
     font-size: clamp(3rem, 20vw, 12rem);
   }
   .sw-panel {
-    padding: 28px 18px;
+    padding: 40px 18px 28px;
   }
   .sw-settings {
     margin: 24px -18px 0;
