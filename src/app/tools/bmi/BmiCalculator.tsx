@@ -16,15 +16,11 @@ export function BmiCalculator() {
   // 空欄になった場合は即座に（ディレイなしで）idle表示に戻す。
   const [debounced, setDebounced] = useState({ h: "", w: "" });
   useEffect(() => {
-    if (hField.value.trim() === "" || wField.value.trim() === "") {
-      setDebounced({ h: hField.value, w: wField.value });
-      return;
-    }
+    const delay = hField.value.trim() === "" || wField.value.trim() === "" ? 0 : DEBOUNCE_MS;
     const t = setTimeout(() => {
       setDebounced({ h: hField.value, w: wField.value });
-    }, DEBOUNCE_MS);
+    }, delay);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hField.value, wField.value]);
 
   const result = useMemo(() => computeBmi(debounced.h, debounced.w), [debounced]);

@@ -17,15 +17,11 @@ export function TaxCalculator() {
 
   const [debounced, setDebounced] = useState({ digits: "", dir, rateChoice, custom: "" });
   useEffect(() => {
-    if (amount.digits === "") {
-      setDebounced({ digits: "", dir, rateChoice, custom: customRate.value });
-      return;
-    }
+    const delay = amount.digits === "" ? 0 : DEBOUNCE_MS;
     const t = setTimeout(() => {
       setDebounced({ digits: amount.digits, dir, rateChoice, custom: customRate.value });
-    }, DEBOUNCE_MS);
+    }, delay);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount.digits, dir, rateChoice, customRate.value]);
 
   const result = useMemo(

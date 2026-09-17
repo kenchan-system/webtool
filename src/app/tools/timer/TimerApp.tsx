@@ -48,6 +48,8 @@ export function TimerApp() {
   const [soundType, setSoundType] = useState<SoundType>("simple");
   const [volumePct, setVolumePct] = useState(80);
   useEffect(() => {
+    // SSR時の既定値から、閲覧者が保存した設定へマウント後に切り替える。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSoundType(loadSoundPref());
     setVolumePct(loadVolumePref());
   }, []);
@@ -82,6 +84,8 @@ export function TimerApp() {
       stopTicking();
       return;
     }
+    // setIntervalから呼ばれる時刻計測で、レンダー中には実行されない。
+    // eslint-disable-next-line react-hooks/purity
     const remaining = (endAtRef.current - Date.now()) / 1000;
     if (remaining <= 0) {
       finish();
@@ -89,6 +93,8 @@ export function TimerApp() {
     }
     setDisplaySec(remaining);
     if (baseTitleRef.current === null) baseTitleRef.current = document.title;
+    // タイマー動作中のブラウザー表示を同期する外部システム更新。
+    // eslint-disable-next-line react-hooks/immutability
     document.title = `${tmrFormat(remaining)} - ${baseTitleRef.current}`;
   }
 
@@ -261,7 +267,6 @@ export function TimerApp() {
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bigMode]);
 
   useEffect(() => {
@@ -270,7 +275,6 @@ export function TimerApp() {
     }
     document.addEventListener("fullscreenchange", onFsChange);
     return () => document.removeEventListener("fullscreenchange", onFsChange);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bigMode]);
 
   useEffect(() => {
@@ -279,7 +283,6 @@ export function TimerApp() {
       if (alarmIntervalRef.current != null) clearInterval(alarmIntervalRef.current);
       if (alarmTimeoutRef.current != null) clearTimeout(alarmTimeoutRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const shownSec = state === "idle" ? durationSec : displaySec;

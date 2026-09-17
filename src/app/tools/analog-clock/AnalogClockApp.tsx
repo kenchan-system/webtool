@@ -16,12 +16,18 @@ function pad2(n: number): string {
 
 export function AnalogClockApp() {
   const [showSeconds, setShowSeconds] = useState(true);
-  useEffect(() => setShowSeconds(loadClockSecondsPref()), []);
+  useEffect(() => {
+    // SSR時の既定値から、閲覧者が保存した表示設定へマウント後に切り替える。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setShowSeconds(loadClockSecondsPref());
+  }, []);
 
   // ビルド時刻をHTMLに焼き込まないよう、現在時刻はマウント後に設定する
   // （デジタル時計と同じ方針）。
   const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
+    // 静的HTMLにビルド時刻を含めないため、初期時刻はマウント後に設定する。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNow(new Date());
     const handle = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(handle);
@@ -51,7 +57,6 @@ export function AnalogClockApp() {
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bigMode]);
   useEffect(() => {
     function onFsChange() {
@@ -59,7 +64,6 @@ export function AnalogClockApp() {
     }
     document.addEventListener("fullscreenchange", onFsChange);
     return () => document.removeEventListener("fullscreenchange", onFsChange);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bigMode]);
 
   if (!now) return null;

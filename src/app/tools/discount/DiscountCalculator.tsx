@@ -16,15 +16,11 @@ export function DiscountCalculator() {
 
   const [debounced, setDebounced] = useState({ digits: "", rateChoice, custom: "" });
   useEffect(() => {
-    if (list.digits === "") {
-      setDebounced({ digits: "", rateChoice, custom: customRate.value });
-      return;
-    }
+    const delay = list.digits === "" ? 0 : DEBOUNCE_MS;
     const t = setTimeout(() => {
       setDebounced({ digits: list.digits, rateChoice, custom: customRate.value });
-    }, DEBOUNCE_MS);
+    }, delay);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [list.digits, rateChoice, customRate.value]);
 
   const result = useMemo(

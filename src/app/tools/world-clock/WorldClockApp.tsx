@@ -32,6 +32,8 @@ export function WorldClockApp() {
   // ビルド時刻・サーバー環境のタイムゾーンをHTMLに焼き込まないよう、
   // 現在地の判定・現在時刻はマウント後に設定する（他の時間系ツールと同じ方針）。
   useEffect(() => {
+    // SSR環境に依存させず、閲覧者のタイムゾーンと保存設定を使用する。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHomeTz(detectHomeTz());
     setSelectedTzs(loadSelectedTzs(WC_DEFAULT_TZS));
     setNow(new Date());
@@ -62,7 +64,6 @@ export function WorldClockApp() {
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bigMode]);
   useEffect(() => {
     function onFsChange() {
@@ -70,7 +71,6 @@ export function WorldClockApp() {
     }
     document.addEventListener("fullscreenchange", onFsChange);
     return () => document.removeEventListener("fullscreenchange", onFsChange);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bigMode]);
 
   const others = useMemo(() => {

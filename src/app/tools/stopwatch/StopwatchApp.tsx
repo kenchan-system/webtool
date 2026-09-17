@@ -40,7 +40,11 @@ export function StopwatchApp() {
   const [bigMode, setBigMode] = useState(false);
 
   const [soundOn, setSoundOn] = useState(false);
-  useEffect(() => setSoundOn(loadSoundPref()), []);
+  useEffect(() => {
+    // SSR時の既定値から、閲覧者が保存した設定へマウント後に切り替える。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSoundOn(loadSoundPref());
+  }, []);
 
   const { ensureAudio, beep } = useStopwatchAudio();
 
@@ -177,7 +181,6 @@ export function StopwatchApp() {
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bigMode]);
 
   useEffect(() => {
@@ -186,7 +189,6 @@ export function StopwatchApp() {
     }
     document.addEventListener("fullscreenchange", onFsChange);
     return () => document.removeEventListener("fullscreenchange", onFsChange);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bigMode]);
 
   // キーボード操作：Space=開始/一時停止/再開、L=ラップ、R=リセット（一時停止中のみ）。

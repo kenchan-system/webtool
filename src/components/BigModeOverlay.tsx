@@ -21,7 +21,11 @@ export function BigModeOverlay({
   children: ReactNode;
 }) {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    // document.bodyへポータルを作れるクライアント環境になってから描画する。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
   if (!mounted) return null;
 
   return createPortal(

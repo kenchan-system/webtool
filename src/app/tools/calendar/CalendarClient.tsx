@@ -38,13 +38,20 @@ export function CalendarClient({
   // 設定する（静的生成ページでのハイドレーション不一致を避ける。日数計算・
   // 和暦早見表と同じ方針）。
   const [today, setToday] = useState<Date | null>(null);
-  useEffect(() => setToday(todayAtMidnight()), []);
+  useEffect(() => {
+    // 静的HTMLにビルド日を含めないため、閲覧者側の日付をマウント後に設定する。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setToday(todayAtMidnight());
+  }, []);
 
   const [y, setY] = useState<number | null>(initialY ?? null);
   const [m, setM] = useState<number | null>(initialM ?? null);
   useEffect(() => {
     if (!today) return;
+    // 初期値未指定のページだけ、閲覧者側の今月で補完する。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (y == null) setY(today.getFullYear());
+
     if (m == null) setM(today.getMonth() + 1);
   }, [today, y, m]);
 
@@ -55,6 +62,8 @@ export function CalendarClient({
 
   const [yDraft, setYDraft] = useState("");
   useEffect(() => {
+    // 前後移動や月選択で確定した年を、編集用の文字列へ同期する。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (y != null) setYDraft(String(y));
   }, [y]);
 
