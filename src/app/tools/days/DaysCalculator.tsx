@@ -6,7 +6,7 @@ import { SegRadioGroup } from "@/components/SegRadioGroup";
 import { CopyButton } from "@/components/CopyButton";
 import { DateYMDField, type YMD } from "@/components/DateYMDField";
 import { useDigitsField } from "@/lib/numberInput";
-import { todayAtMidnight, ymdToDate } from "@/lib/dateUtil";
+import { ymdToDate } from "@/lib/dateUtil";
 import { computeDaysAdd, computeDaysSpan, type DaysDir, type DaysMode, type DaysResult } from "./lib";
 
 const DEBOUNCE_MS = 180;
@@ -39,6 +39,8 @@ export function DaysCalculator() {
 
   useEffect(() => {
     const t = todayYmd();
+    // 閲覧者側の「今日」を、静的生成後の初回マウント時にだけ反映する。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setFrom(t);
     setTo(t);
     setBase(t);
@@ -136,7 +138,7 @@ export function DaysCalculator() {
             )}
           </div>
           <p className="field-hint">
-            年は半角の数字、月・日はリストから選びます。過去・未来どちらも指定できます。「◯日後・◯日前」では日数の左の「＋／−」で向き（＋＝後／−＝前）を切り替えます。
+            過去・未来どちらも指定できます。「◯日後・◯日前」では日数の左の「＋／−」で向き（＋＝後／−＝前）を切り替えます。
           </p>
         </div>
         <div className="tool-output">

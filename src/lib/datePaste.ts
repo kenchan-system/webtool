@@ -1,5 +1,3 @@
-import { ymdToDate } from "./dateUtil";
-
 // 曖昧な月日順や数字だけの8桁は推測しない。和暦は改元日も検証する。
 const ERAS = [
   { names: ["令和", "R"], start: 20190501, end: 22001231 },
@@ -9,7 +7,10 @@ const ERAS = [
   { names: ["明治", "M"], start: 18680101, end: 19120729 },
 ];
 
-export function parsePastedDate(text: string): { y: string; m: string; d: string } | null {
+export function parsePastedDate(
+  text: string,
+  { minYear = 1900, maxYear = 2200 }: { minYear?: number; maxYear?: number } = {},
+): { y: string; m: string; d: string } | null {
   let source = text.normalize("NFKC").trim().toUpperCase();
   const era = ERAS.find((item) => item.names.some((name) => source.startsWith(name)));
   if (era) {
@@ -29,6 +30,8 @@ export function parsePastedDate(text: string): { y: string; m: string; d: string
     const date = y * 10000 + m * 100 + d;
     if (date < era.start || date > era.end) return null;
   }
-  if (!ymdToDate(y, m, d)) return null;
+  if (y < minYear || y > maxYear || m < 1 || m > 12 || d < 1 || d > 31) return null;
+  const date = new Date(y, m - 1, d);
+  if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) return null;
   return { y: String(y), m: String(m), d: String(d) };
 }

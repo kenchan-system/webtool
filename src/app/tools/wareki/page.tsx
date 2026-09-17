@@ -60,8 +60,7 @@ export default function WarekiPage() {
 
       <AdSlot />
 
-      <div className="tool-doc">
-        <p className="doc-eyebrow">このツールについて</p>
+      <div className="tool-doc tool-doc--continuation">
         <p className="doc-updated">最終更新：2026年9月</p>
         <div className="prose">
           <h2>このツールでできること</h2>
@@ -75,9 +74,10 @@ export default function WarekiPage() {
           <ol>
             <li>「西暦 → 和暦」か「和暦 → 西暦」を選びます。</li>
             <li>西暦 → 和暦：西暦の年を入れます。生年月日を変換したいときは「月・日」も入れます。</li>
-            <li>和暦 → 西暦：元号を選び、年を入れます（元年は「1」）。「月・日」を入れると日付ごと変換します。年の欄に「S60.4.1」のような略号でまとめて入力することもできます。</li>
+            <li>和暦 → 西暦：元号を選び、年を入れます（元年は「1」）。「月・日」を入れると日付ごと変換します。</li>
           </ol>
           <p>入力するとその場で結果が表示されます（ボタン操作は不要です）。</p>
+          <p>年月日のどの欄にも日付全体を貼り付けられます。西暦は「2000/9/17」、和暦は「平成12年9月17日」「H12.9.17」などに対応しています。</p>
 
           <h2>元号の一覧</h2>
           <div className="chart-scroll">

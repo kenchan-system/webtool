@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { KenchanAvatar } from "@/components/KenchanAvatar";
 import { SegRadioGroup } from "@/components/SegRadioGroup";
 import { CopyButton } from "@/components/CopyButton";
-import type { YMD } from "@/components/DateYMDField";
-import { PasteDateField } from "./PasteDateField";
+import { DateYMDField, type YMD } from "@/components/DateYMDField";
 import { todayAtMidnight, ymdToDate } from "@/lib/dateUtil";
 import {
   ageChartRows,
@@ -70,8 +69,15 @@ export function AgeCalculator() {
           </p>
           <div className="fields">
             <div className="field">
-              <p className="age-date-label">生年月日</p>
-              <PasteDateField idPrefix="age" value={birth} onChange={setBirth} label="生年月日" />
+              <p className="date-field-label">生年月日</p>
+              <DateYMDField
+                idPrefix="age"
+                value={birth}
+                onChange={setBirth}
+                yLabel="生年月日の年（西暦）"
+                mLabel="生年月日の月"
+                dLabel="生年月日の日"
+              />
             </div>
             <div className="field">
               <label id="age-base-label">基準日</label>
@@ -86,11 +92,14 @@ export function AgeCalculator() {
               />
               {base === "custom" && (
                 <div style={{ marginTop: 8 }}>
-                  <PasteDateField
+                  <DateYMDField
                     idPrefix="age-base"
                     value={customBase}
                     onChange={setCustomBase}
-                    label="基準日"
+                    yLabel="基準日の年（西暦）"
+                    mLabel="基準日の月"
+                    dLabel="基準日の日"
+                    yPlaceholder="2026"
                   />
                 </div>
               )}
@@ -108,15 +117,15 @@ export function AgeCalculator() {
         </div>
       </div>
 
-      {!base_ && <p className="field-hint">基準日が未入力・不正な間は、早見表のみ今年を表示しています。</p>}
-      <h3>
-        年齢早見表（{baseY}年版）
-      </h3>
-      <details className="chart-details">
-        <summary>表を開く</summary>
-        <p>生まれ年（西暦）ごとの、基準日の年に迎える満年齢の早見表です。上のツールに入力すると、その行に印がつきます。</p>
-        <div className="chart-scroll chart-scroll--tall">
-          <table className="age-chart age-chart--eq">
+      <section className="tool-doc" aria-labelledby="age-about-label">
+        <p className="doc-eyebrow" id="age-about-label">このツールについて</p>
+        {!base_ && <p className="field-hint">基準日が未入力・不正な間は、早見表のみ今年を表示しています。</p>}
+        <h3>年齢早見表（{baseY}年版）</h3>
+        <details className="chart-details">
+          <summary>表を開く</summary>
+          <p>生まれ年（西暦）ごとの、基準日の年に迎える満年齢の早見表です。上のツールに入力すると、その行に印がつきます。</p>
+          <div className="chart-scroll chart-scroll--tall">
+            <table className="age-chart age-chart--eq">
             <caption className="sr-only">生まれ年ごとの今年の満年齢・和暦・干支の早見表</caption>
             <thead>
               <tr>
@@ -136,14 +145,14 @@ export function AgeCalculator() {
                 </tr>
               ))}
             </tbody>
-          </table>
-        </div>
-      </details>
+            </table>
+          </div>
+        </details>
 
-      <h3>学年早見表（{ageSchoolYearStart(chartBase)}年度版）</h3>
-      <p>生まれた期間ごとの、基準日の年度の学年です。上のツールに入力すると、その行に印がつきます。</p>
-      <div className="chart-scroll">
-        <table className="age-chart">
+        <h3>学年早見表（{ageSchoolYearStart(chartBase)}年度版）</h3>
+        <p>生まれた期間ごとの、基準日の年度の学年です。上のツールに入力すると、その行に印がつきます。</p>
+        <div className="chart-scroll">
+          <table className="age-chart">
           <caption className="sr-only">生まれた期間ごとの今年度の学年の早見表</caption>
           <thead>
             <tr>
@@ -159,8 +168,9 @@ export function AgeCalculator() {
               </tr>
             ))}
           </tbody>
-        </table>
-      </div>
+          </table>
+        </div>
+      </section>
     </>
   );
 }

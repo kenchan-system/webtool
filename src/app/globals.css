@@ -541,6 +541,11 @@ h1 {
   padding-top: 20px;
   border-top: 2px solid var(--border);
 }
+.tool-doc--continuation {
+  margin-top: 28px;
+  padding-top: 0;
+  border-top: 0;
+}
 .doc-eyebrow {
   font-family: var(--font-display);
   font-weight: 700;
@@ -883,51 +888,30 @@ h1 {
   animation: rise 0.22s ease both;
 }
 
-/* 年(text)＋月(select)＋日(select) の日付入力（年齢・日数計算など） */
-.date-input {
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.date-input input {
-  width: 5ch;
-  flex: 0 0 auto;
-  font-size: 1rem;
-}
-.date-input select {
-  width: auto;
-  min-width: 0;
-  flex: 0 0 auto;
-  font-size: 1rem;
-  padding: 12px 4px;
-}
-.date-input span {
-  margin-right: 8px;
-}
-
-/* 年齢計算：年月日のどの欄でも日付全体を貼り付けできる入力 */
-.age-date-label {
+/* 日付ツール：年月日のどの欄でも日付全体を貼り付けできる入力 */
+.date-field-label {
   font-weight: 700;
   margin-bottom: 8px;
 }
-.age-date-fields {
+.date-paste-fields {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
-.age-date-fields > div {
+.date-paste-fields > div {
   min-width: 0;
 }
-.age-date-fields .input input {
+.date-paste-fields .input input {
   min-width: 0;
   font-size: 1rem;
 }
-.age-date-notice {
+.date-paste-notice {
   margin-top: 4px;
   font-size: 0.8rem;
   color: var(--accent-strong);
   overflow-wrap: anywhere;
 }
-.age-date-notice--error {
+.date-paste-notice--error {
   color: var(--danger);
 }
 

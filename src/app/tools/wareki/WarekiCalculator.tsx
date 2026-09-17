@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ClipboardEvent } from "react";
 import { KenchanAvatar } from "@/components/KenchanAvatar";
 import { SegRadioGroup } from "@/components/SegRadioGroup";
 import { CopyButton } from "@/components/CopyButton";
+import { DateYMDField } from "@/components/DateYMDField";
 import { sanitizeIntDigits } from "@/lib/numberInput";
 import {
   computeS2W,
@@ -17,8 +18,6 @@ import {
 } from "./lib";
 
 const DEBOUNCE_MS = 180;
-const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
-const DAYS = Array.from({ length: 31 }, (_, i) => i + 1);
 const ERA_OPTIONS: { value: EraKey; label: string }[] = [
   { value: "reiwa", label: "令和" },
   { value: "heisei", label: "平成" },
@@ -27,39 +26,6 @@ const ERA_OPTIONS: { value: EraKey; label: string }[] = [
   { value: "meiji", label: "明治" },
 ];
 
-function MonthDaySelect({
-  mStr,
-  dStr,
-  onMChange,
-  onDChange,
-}: {
-  mStr: string;
-  dStr: string;
-  onMChange: (v: string) => void;
-  onDChange: (v: string) => void;
-}) {
-  return (
-    <>
-      <select aria-label="月（任意）" value={mStr} onChange={(e) => onMChange(e.target.value)}>
-        <option value="">–</option>
-        {MONTHS.map((m) => (
-          <option key={m} value={m}>
-            {m}月
-          </option>
-        ))}
-      </select>
-      <select aria-label="日（任意）" value={dStr} onChange={(e) => onDChange(e.target.value)}>
-        <option value="">–</option>
-        {DAYS.map((d) => (
-          <option key={d} value={d}>
-            {d}日
-          </option>
-        ))}
-      </select>
-    </>
-  );
-}
-
 export function WarekiCalculator() {
   const [dir, setDir] = useState<WkDir>("w2s");
   const [yDigits, setYDigits] = useState("");
@@ -67,14 +33,14 @@ export function WarekiCalculator() {
   const [dStr, setDStr] = useState("");
   const [eraSelect, setEraSelect] = useState<EraKey>("reiwa");
   const [nRaw, setNRaw] = useState("");
+  const [warekiPasteNotice, setWarekiPasteNotice] = useState<{ text: string; error: boolean } | null>(null);
   // 早見表の「今年」はビルド時刻ではなく閲覧者の今日を使いたいので、
   // マウント後に設定する（静的生成ページでのハイドレーション不一致を避ける）。
   const [nowY, setNowY] = useState<number | null>(null);
-  useEffect(() => setNowY(new Date().getFullYear()), []);
-
-  function onYChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setYDigits(sanitizeIntDigits(e.target.value).slice(0, 4));
-  }
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setNowY(new Date().getFullYear());
+  }, []);
   function onNChange(e: React.ChangeEvent<HTMLInputElement>) {
     const sanitized = wkSanitizeS2WInput(e.target.value);
     setNRaw(sanitized);
@@ -85,10 +51,44 @@ export function WarekiCalculator() {
       setMStr(okM ? String(p.m) : "");
       setDStr(okM && p.d != null && p.d >= 1 && p.d <= 31 ? String(p.d) : "");
     }
+    setWarekiPasteNotice(null);
   }
   function onNBlur() {
     const p = wkParseS2W(nRaw);
     if (p.y != null && p.y >= 1) setNRaw(String(p.y));
+  }
+
+  function onWarekiPaste(e: ClipboardEvent<HTMLInputElement>, part: "y" | "m" | "d") {
+    const text = e.clipboardData.getData("text").normalize("NFKC").trim();
+    if (!text) return;
+    e.preventDefault();
+
+    if (/^\d+$/.test(text)) {
+      if (text.length > (part === "y" ? 3 : 2)) {
+        setWarekiPasteNotice({ text: "和暦の年は3桁、月・日は2桁までで入力してください。", error: true });
+        return;
+      }
+      if (part === "y") setNRaw(text);
+      if (part === "m") setMStr(text);
+      if (part === "d") setDStr(text);
+      setWarekiPasteNotice(null);
+      return;
+    }
+
+    const parsed = wkParseS2W(text);
+    if (parsed.y == null || parsed.m == null || parsed.d == null
+      || parsed.y < 1 || parsed.m < 1 || parsed.m > 12 || parsed.d < 1 || parsed.d > 31) {
+      setWarekiPasteNotice({
+        text: "和暦の日付を読み取れませんでした。平成12年9月17日、H12.9.17 などの形式で貼り付けてください。",
+        error: true,
+      });
+      return;
+    }
+    if (parsed.eraKey) setEraSelect(parsed.eraKey);
+    setNRaw(String(parsed.y));
+    setMStr(String(parsed.m));
+    setDStr(String(parsed.d));
+    setWarekiPasteNotice({ text: "年月日をまとめて入力しました。", error: false });
   }
 
   const [debounced, setDebounced] = useState({ dir, yDigits, mStr, dStr, eraSelect, nRaw });
@@ -130,21 +130,21 @@ export function WarekiCalculator() {
 
             {dir === "w2s" && (
               <div className="field">
-                <label htmlFor="wareki-y">西暦（月・日は任意）</label>
-                <div className="input date-input">
-                  <input
-                    id="wareki-y"
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="2024"
-                    autoComplete="off"
-                    aria-label="西暦の年"
-                    value={yDigits}
-                    onChange={onYChange}
-                  />
-                  <span>年</span>
-                  <MonthDaySelect mStr={mStr} dStr={dStr} onMChange={setMStr} onDChange={setDStr} />
-                </div>
+                <p className="date-field-label">西暦（月・日は任意）</p>
+                <DateYMDField
+                  idPrefix="wareki"
+                  value={{ y: yDigits, m: mStr, d: dStr }}
+                  onChange={(value) => {
+                    setYDigits(value.y);
+                    setMStr(value.m);
+                    setDStr(value.d);
+                  }}
+                  yLabel="西暦の年"
+                  mLabel="西暦の月（任意）"
+                  dLabel="西暦の日（任意）"
+                  yPlaceholder="2024"
+                  minYear={1868}
+                />
               </div>
             )}
 
@@ -168,22 +168,62 @@ export function WarekiCalculator() {
                   </div>
                 </div>
                 <div className="field">
-                  <label htmlFor="wareki-n">和暦の年（月・日・「S60.4.1」略号も可）</label>
-                  <div className="input date-input">
-                    <input
-                      id="wareki-n"
-                      type="text"
-                      inputMode="text"
-                      placeholder="6 / S60.4.1"
-                      autoComplete="off"
-                      aria-label="和暦の年（略号入力可）"
-                      value={nRaw}
-                      onChange={onNChange}
-                      onBlur={onNBlur}
-                    />
-                    <span>年</span>
-                    <MonthDaySelect mStr={mStr} dStr={dStr} onMChange={setMStr} onDChange={setDStr} />
+                  <p className="date-field-label">和暦（月・日は任意）</p>
+                  <div className="date-paste-fields">
+                    <div>
+                      <label htmlFor="wareki-n">年</label>
+                      <div className="input">
+                        <input
+                          id="wareki-n"
+                          type="text"
+                          inputMode="text"
+                          placeholder="6"
+                          autoComplete="off"
+                          aria-label="和暦の年（略号入力可）"
+                          aria-describedby="wareki-s2w-paste-hint wareki-s2w-paste-notice"
+                          value={nRaw}
+                          onPaste={(e) => onWarekiPaste(e, "y")}
+                          onChange={onNChange}
+                          onBlur={onNBlur}
+                        />
+                      </div>
+                    </div>
+                    {(["m", "d"] as const).map((part, index) => (
+                      <div key={part}>
+                        <label htmlFor={`wareki-${part}`}>{part === "m" ? "月" : "日"}</label>
+                        <div className="input">
+                          <input
+                            id={`wareki-${part}`}
+                            type="text"
+                            inputMode="numeric"
+                            placeholder={index === 0 ? "9" : "17"}
+                            autoComplete="off"
+                            aria-label={part === "m" ? "和暦の月（任意）" : "和暦の日（任意）"}
+                            aria-describedby="wareki-s2w-paste-hint wareki-s2w-paste-notice"
+                            value={part === "m" ? mStr : dStr}
+                            onPaste={(e) => onWarekiPaste(e, part)}
+                            onChange={(e) => {
+                              const value = sanitizeIntDigits(e.target.value).slice(0, 2);
+                              if (part === "m") setMStr(value);
+                              else setDStr(value);
+                              setWarekiPasteNotice(null);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
                   </div>
+                  <p className="field-hint" id="wareki-s2w-paste-hint">
+                    どの欄にも和暦の日付をまとめて貼り付けできます。例：平成12年9月17日、H12.9.17
+                  </p>
+                  <p
+                    id="wareki-s2w-paste-notice"
+                    className={`date-paste-notice${warekiPasteNotice?.error ? " date-paste-notice--error" : ""}`}
+                    role="status"
+                    aria-live="polite"
+                  >
+                    {warekiPasteNotice?.text}
+                  </p>
                 </div>
               </>
             )}
@@ -202,10 +242,12 @@ export function WarekiCalculator() {
         </div>
       </div>
 
-      <h2>和暦早見表（西暦・和暦・年齢）</h2>
-      <p>西暦・和暦・今年の年齢の対応表です。生まれ年を書類用に和暦へ直すときの参考にどうぞ。上のツールに入力すると、その行に印がつきます（枠内は上下にスクロールできます）。</p>
-      <div className="chart-scroll chart-scroll--tall">
-        <table className="age-chart age-chart--eq">
+      <section className="tool-doc" aria-labelledby="wareki-about-label">
+        <p className="doc-eyebrow" id="wareki-about-label">このツールについて</p>
+        <h2>和暦早見表（西暦・和暦・年齢）</h2>
+        <p>西暦・和暦・今年の年齢の対応表です。生まれ年を書類用に和暦へ直すときの参考にどうぞ。上のツールに入力すると、その行に印がつきます（枠内は上下にスクロールできます）。</p>
+        <div className="chart-scroll chart-scroll--tall">
+          <table className="age-chart age-chart--eq">
           <caption className="sr-only">西暦・和暦・今年の年齢の早見表</caption>
           <thead>
             <tr>
@@ -223,8 +265,9 @@ export function WarekiCalculator() {
               </tr>
             ))}
           </tbody>
-        </table>
-      </div>
+          </table>
+        </div>
+      </section>
     </>
   );
 }

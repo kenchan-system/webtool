@@ -48,8 +48,7 @@ export default function AgePage() {
 
       <AdSlot />
 
-      <div className="tool-doc">
-        <p className="doc-eyebrow">このツールについて</p>
+      <div className="tool-doc tool-doc--continuation">
         <p className="doc-updated">最終更新：2026年9月</p>
         <div className="prose">
           <h2>このツールでできること</h2>
