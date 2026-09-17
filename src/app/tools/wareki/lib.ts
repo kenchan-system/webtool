@@ -230,6 +230,17 @@ export function computeS2W(rawN: string, eraSelect: EraKey, mStr: string, dStr: 
   if (di2 && !wkDayValid(Y2, mi2, di2)) {
     return { kind: "error", message: `${mi2}月に${di2}日はありません。日付を確認してください。` };
   }
+  if (di2 && N === 1 && k !== "meiji" && !wkOnOrAfterTransition(k, mi2, di2)) {
+    const transition = WK_TR[k];
+    return { kind: "error", message: `${transition.neu}は${transition.neuStart}からです。日付を確認してください。` };
+  }
+  if (di2 && era2.len && N === era2.len) {
+    const nextKey = WK_NEXT[k];
+    if (nextKey && wkOnOrAfterTransition(nextKey, mi2, di2)) {
+      const transition = WK_TR[nextKey];
+      return { kind: "error", message: `${transition.old}は${transition.oldEnd}までです。日付を確認してください。` };
+    }
+  }
 
   const md2 = wkMD(mi2, di2);
   const waName = wkYearName(era2, N) + md2;
