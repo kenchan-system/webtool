@@ -1756,9 +1756,15 @@ h1 {
     height: 58px;
     padding: 4px 5px;
   }
-  .cal-hol-name,
-  .cal-liuyao {
+  .cal-hol-name {
     display: none;
+  }
+  .cal-liuyao {
+    display: block;
+    margin-top: 1px;
+    font-size: 0.58rem;
+    line-height: 1.2;
+    white-space: nowrap;
   }
   .cal-table td.is-holiday .cal-day-num::after {
     content: "";
