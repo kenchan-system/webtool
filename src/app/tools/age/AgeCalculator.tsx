@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { KenchanAvatar } from "@/components/KenchanAvatar";
 import { SegRadioGroup } from "@/components/SegRadioGroup";
 import { CopyButton } from "@/components/CopyButton";
-import { DateYMDField, type YMD } from "@/components/DateYMDField";
+import type { YMD } from "@/components/DateYMDField";
+import { PasteDateField } from "./PasteDateField";
 import { todayAtMidnight, ymdToDate } from "@/lib/dateUtil";
 import {
   ageChartRows,
@@ -18,10 +19,10 @@ import {
 const DEBOUNCE_MS = 180;
 type Base = "today" | "custom";
 
-function baseDate(base: Base, customYmd: YMD): Date {
+function baseDate(base: Base, customYmd: YMD): Date | null {
   if (base === "custom") {
     const dt = ymdToDate(parseInt(customYmd.y, 10), parseInt(customYmd.m, 10), parseInt(customYmd.d, 10));
-    if (dt) return dt;
+    return dt;
   }
   return todayAtMidnight();
 }
@@ -38,16 +39,18 @@ export function AgeCalculator() {
   }, [birth, base, customBase]);
 
   const base_ = useMemo(() => baseDate(debounced.base, debounced.customBase), [debounced.base, debounced.customBase]);
-  const result = useMemo(
-    () => computeAge(debounced.birth.y, debounced.birth.m, debounced.birth.d, base_),
+  const result = useMemo<AgeResult>(
+    () => base_ ? computeAge(debounced.birth.y, debounced.birth.m, debounced.birth.d, base_)
+      : { kind: "error", message: "1900〜2200年の正しい基準日を入力してください。" },
     [debounced.birth, base_],
   );
 
-  const baseY = base_.getFullYear();
+  const chartBase = useMemo(() => base_ ?? todayAtMidnight(), [base_]);
+  const baseY = chartBase.getFullYear();
   const ageRows = useMemo(() => ageChartRows(baseY), [baseY]);
-  const gradeRows = useMemo(() => gradeChartRows(base_), [base_]);
+  const gradeRows = useMemo(() => gradeChartRows(chartBase), [chartBase]);
   const gradeHitIdx =
-    result.kind === "success" ? gradeChartHitIndex(result.y, parseInt(debounced.birth.m, 10), parseInt(debounced.birth.d, 10), base_) : -1;
+    result.kind === "success" ? gradeChartHitIndex(result.y, parseInt(debounced.birth.m, 10), parseInt(debounced.birth.d, 10), chartBase) : -1;
 
   function handleBaseChange(v: Base) {
     setBase(v);
@@ -67,8 +70,8 @@ export function AgeCalculator() {
           </p>
           <div className="fields">
             <div className="field">
-              <label htmlFor="age-y">生年月日</label>
-              <DateYMDField idPrefix="age" value={birth} onChange={setBirth} yLabel="生まれた年（西暦）" yPlaceholder="2000" />
+              <p className="age-date-label">生年月日</p>
+              <PasteDateField idPrefix="age" value={birth} onChange={setBirth} label="生年月日" />
             </div>
             <div className="field">
               <label id="age-base-label">基準日</label>
@@ -83,19 +86,17 @@ export function AgeCalculator() {
               />
               {base === "custom" && (
                 <div style={{ marginTop: 8 }}>
-                  <DateYMDField
+                  <PasteDateField
                     idPrefix="age-base"
                     value={customBase}
                     onChange={setCustomBase}
-                    yLabel="基準日の年（西暦）"
-                    yPlaceholder="2026"
+                    label="基準日"
                   />
                 </div>
               )}
-              <p className="field-hint">年は半角の数字、月・日はリストから。過去も未来も指定できます。その日に何歳・何年生になるかを計算します。</p>
+              <p className="field-hint">過去も未来も指定できます。その日に何歳・何年生になるかを計算します。</p>
             </div>
           </div>
-          <p className="field-hint">生まれた年は半角の数字で入力できます。西暦（例：2000）で入れてください。</p>
         </div>
         <div className="tool-output">
           <p className="panel-label">
@@ -107,6 +108,7 @@ export function AgeCalculator() {
         </div>
       </div>
 
+      {!base_ && <p className="field-hint">基準日が未入力・不正な間は、早見表のみ今年を表示しています。</p>}
       <h3>
         年齢早見表（{baseY}年版）
       </h3>
@@ -138,7 +140,7 @@ export function AgeCalculator() {
         </div>
       </details>
 
-      <h3>学年早見表（{ageSchoolYearStart(base_)}年度版）</h3>
+      <h3>学年早見表（{ageSchoolYearStart(chartBase)}年度版）</h3>
       <p>生まれた期間ごとの、基準日の年度の学年です。上のツールに入力すると、その行に印がつきます。</p>
       <div className="chart-scroll">
         <table className="age-chart">
